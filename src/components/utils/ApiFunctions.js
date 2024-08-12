@@ -42,7 +42,7 @@ export async function getRoomTypes() {
 export async function getAllRooms() {
     try{
      const result=await api.get("/rooms/all-rooms")
-     console.log(result.data)
+     //console.log(result.data)
      return result.data;
     }catch(error)
     {
@@ -63,23 +63,27 @@ export async function deleteRoom(roomId) {
     }
 }
 
-// first fetch the data and then it will update
-export async function updateRoom(roomId,roomData)
-{
-   const formdata=new FormData()
-   formdata.append("roomType",roomData.roomType);
-   formdata.append("roomPrice",roomData.roomPrice);
-   formdata.append("photo",roomData.photo);
-   const response = await api.put(`/rooms/update/${roomId}`)
-   return response;
+export async function updateRoom(roomId, roomData) {
+    const formData = new FormData();
+    formData.append("roomType", roomData.roomType);
+    formData.append("roomPrice", roomData.roomPrice);
+    formData.append("photo", roomData.photo);
+
+    try {
+        const response = await api.put(`/rooms/update/${roomId}`, formData);
+        return response;
+    } catch (error) {
+        throw new Error(`Error updating room: ${error.message}`);
+    }
 }
 
 // function to single room update, get the room by id
-export async function getRoomById(params) {
+export async function getRoomById(roomId) {
     try{
 
         const result=await api.get(`/rooms/room/${roomId}`)
-        return result;
+        console.log(result)
+        return result.data;
     }catch(error)
     {
         throw new Error(`Error fetching room ${error.message}`);

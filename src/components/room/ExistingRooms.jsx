@@ -4,7 +4,7 @@ import { Col, Row } from "react-bootstrap";
 import RoomFilter from '../common/RoomFilter';
 import RoomPaginator from '../common/RoomPaginator';
 import { MdDelete } from "react-icons/md";
-import {FaEye,FaEdit} from "react-icons/fa"
+import { FaEdit, FaEye, FaPlus, FaTrashAlt } from "react-icons/fa"
 import {Link} from "react-router-dom"
 function ExistingRooms() {
   const [rooms, setRooms] = useState([]);
@@ -79,7 +79,6 @@ function ExistingRooms() {
     setTimeout(()=>{
      setSuccessMessage("")
      setErrorMessage("")
-
     },3000)
   }
   return (
@@ -89,12 +88,21 @@ function ExistingRooms() {
       ) : (
         <>
           <section className='mt-5 mb-5 container'>
-            <div className='d-flex justify-content-center mb-3 mt-5'>
+            <div className='d-flex justify-content-between mb-3 mt-5'>
               <h2>Existing Rooms</h2>
+
             </div>
+            <Row>
             <Col md={6} className='mb-3 mb-md-0'>
               <RoomFilter data={rooms} setFilteredData={setFilteredRooms} />
             </Col>
+           <Col className='d-flex justify-content-end'>
+           <Link to="/add-rooms">
+              <FaPlus/>Add New Room
+              </Link>
+           </Col>
+           </Row>
+
             <table className='table table-bordered table-hover'>
               <thead>
                 <tr className='text-center'>
@@ -110,7 +118,7 @@ function ExistingRooms() {
                     <td>{room.id}</td>
                     <td>{room.roomType}</td>
                     <td>{room.roomPrice}</td>
-                    <td className='gap-2'>
+                    <td className=''>
                       <Link to={`/edit-room/${room.id}`}>
                       <span className='btn btn-info btn-sm'><FaEye/></span>
                       <span className='btn btn-warning btn-sm'><FaEdit/></span>
